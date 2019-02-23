@@ -6,8 +6,10 @@
 
 import requests
 import json
+import platform
 import sys
 import random
+import os
 import time
 
 __author__ = 'Sri Manikanta Palakollu.'
@@ -29,8 +31,12 @@ class Scanner:
     
         self.api = "https://dns-api.org/"
         try:
+            if platform.system() == 'windows':
+                os.system('cls')
+            else:
+                os.system('clear')
             self.printLogo()
-            self.domainName = input(self.c + 'Enter your domain name:' + self.c)
+            self.domainName = input(self.c + 'Enter your domain name to scan the record: ' + self.c)
             self.scanningARecords()
         except KeyboardInterrupt:
             print(self.r + '\n [!] An Keyboard Interrupt Occured. [!]' + self.r)
