@@ -30,7 +30,7 @@ class Scanner:
         self.api = "https://dns-api.org/"
         try:
             self.printLogo()
-            self.domainName = input(self.g + 'Enter your domain name:' + self.g)
+            self.domainName = input(self.c + 'Enter your domain name:' + self.c)
             self.scanningARecords()
         except KeyboardInterrupt:
             print(self.r + '\n [!] An Keyboard Interrupt Occured. [!]' + self.r)
@@ -47,27 +47,30 @@ class Scanner:
                 json_object = json.loads(responseDate)
                 ttl1 = json_object[0]['ttl']
                 ip1  =  json_object[0]['value']
-                print("First A Record: " + ip1 + " | TTL: " + ttl1)
-                ttl2 = json_object[1]['ttl']
-                ip2 = json_object[1]['value']
-                print("Second A Record: " + ip2 + " | TTL " + ttl2)
-                print('Dns Lookup Scanning completed Sucessfully...!')
-                print('Starting the MX-Records Scan')
+                print(self.y + '\nStarting the A Record Scan\n' + self.y)
+                print('-' * 30)
+                print(self.y + "\nFirst A Record: " + ip1 + " | TTL: " + ttl1 + self.y)
+                print(self.y + 'Completed A Record Scan Sucessfully...!\n' + self.y)
+                print(self.rr + '\nStarting the MX-Records Scan\n' + self.rr)
+                print('-' * 30)
                 self.scanningMXRecords()
 
             else:
-                print('Bad Response')
-                print('Status Code of the Scan: {}'.format(response.status_code))
-                print('Starting the MX-Records Scan')
+                print(self.y + '\n Bad Response' + self.y)
+                print(self.y +'Status Code of the Scan: {}'.format(response.status_code) + self.y)
+                print(self.rr +'\n Starting the MX-Records Scan\n' + self.rr)
+                print('-' * 30)
                 self.scanningMXRecords()
 
         except IndexError:
-            print('Failed To Find A Records')
-            print('Starting the MX-Records Scan')
+            print(self.r + 'Failed To Find A Records' + self.r)
+            print(self.rr + 'Starting the MX-Records Scan' + self.rr)
+            print('-' * 30)
             self.scanningMXRecords()
         except KeyError:
-            print('Failed To Find \'A\' Records')
-            print('Starting the MX-Records Scan')
+            print(self.r + 'Failed To Find \'A\' Records' + self.r)
+            print(self.rr + 'Starting the MX-Records Scan' + self.rr)
+            print('-' * 30)
             self.scanningMXRecords()
 
     def scanningMXRecords(self):
@@ -84,25 +87,30 @@ class Scanner:
                 value2 = json_obj[1]['value']
                 ttlmx1 = json_obj[0]['ttl']
                 ttlmx2 = json_obj[1]['ttl']
-                print("First MX Scan Record: " + value1.replace("10    ","").replace("com.","com") + " | TTL: " + ttlmx1)
-                print("Second MX Scan Record: " + value2.replace("10    ","").replace("com.","com") + " | TTL: " + ttlmx2)
-                print('Completed the MX Records Scan Sucessfully...!')
-                print('Starting the AAAA Record Scan')
+                print(self.rr + "First MX Scan Record: " + value1.replace("10    ","").replace("com.","com") + " | TTL: " + ttlmx1 + self.rr)
+                print(self.rr + "Second MX Scan Record: " + value2.replace("10    ","").replace("com.","com") + " | TTL: " + ttlmx2 + self.rr)
+                print(self.rr + 'Completed the MX Records Scan Sucessfully...!\n' + self.rr)
+                print(self.w + '\nStarting the AAAA Record Scan\n' + self.w)
+                print('-' * 30)
                 self.scanningAAAARecords()
             
             else:
-                print('Bad Response')
-                print('Status Code of the Scan: {}'.format(response.status_code))
+                print(self.rr + 'Bad Response' + self.rr)
+                print(self.rr + 'Status Code of the Scan: {}'.format(response.status_code) + self.rr)
+                print(self.w + '\nStarting the AAAA Record Scan' + self.w)
+                print('-' * 30)
                 self.scanningAAAARecords() 
         
         except IndexError:
-            print('Failed to find Mx Scanning records.')
-            print('Starting the AAAA scan.')
+            print(self.r + 'Failed to find Mx Scanning records.' + self.r)
+            print(self.w + '\nStarting the AAAA Record Scan' + self.w)
+            print('-' * 30)
             self.scanningAAAARecords()
         
         except KeyError:
-            print('Failed to find Mx Scanning records.')
-            print('Starting the AAAA scan.')
+            print(self.r + 'Failed to find Mx Scanning records.' + self.r)
+            print(self.w + '\nStarting the AAAA Record Scan' + self.w)
+            print('-' * 30)
             self.scanningAAAARecords()
 
     def scanningAAAARecords(self):
@@ -117,24 +125,28 @@ class Scanner:
                 json_obj = json.loads(response_data)
                 ttl = json_obj[0]['ttl']
                 ipv6 = json_obj[0]['value']
-                print('AAAA Scan Record: TTL : {} | ipv6 Address: {}'.format(ttl,ipv6))
-                print('AAAA Scan completed Sucessfully')
-                print('Starting the TXT Record Scan')
+                print(self.w  + 'AAAA Scan Record: TTL : {} | ipv6 Address: {}'.format(ttl,ipv6) + self.w)
+                print(self.w + 'AAAA Scan completed Sucessfully\n' + self.w)
+                print(self.c + '\nStarting the TXT Record Scan\n' + self.c)
+                print('-' * 30)
                 self.scanningTXTRecord()
             else:
-                print('Bad Response')
-                print('Status Code of the Scan: {}'.format(response.status_code))
-                print('Starting the TXT Record Scan')
+                print(self.w + 'Bad Response' + self.w)
+                print(self.w + 'Status Code of the Scan: {}'.format(response.status_code) + self.w)
+                print(self.c + '\nStarting the TXT Record Scan' + self.c)
+                print('-' * 30)
                 self.scanningTXTRecord()
         
         except IndexError:
-            print('Failed to find Some AAAA Scanning records.')
-            print('Starting the TXT Record scan.')
+            print(self.r + '\nFailed to find Some AAAA Scanning records.' + self.r)
+            print(self.c + '\nStarting the TXT Record Scan' + self.c)
+            print('-' * 30)
             self.scanningTXTRecord()
         
         except KeyError:
-            print('Failed to find some AAAA Scanning records.')
-            print('Starting the TXT Record scan.')
+            print(self.r + '\nFailed to find some AAAA Scanning records.' + self.r)
+            print(self.c + '\nStarting the TXT Record Scan' + self.c)
+            print('-' * 30)
             self.scanningTXTRecord()
 
     def scanningTXTRecord(self):
@@ -153,22 +165,22 @@ class Scanner:
                 json_obj = json.loads(response_data)
                 value1 = json_obj[0]['value']
                 ttl1 = json_obj[0]['ttl']
-                print("First TXT Scan Record: " + value1 + " | TTL: " + ttl1)
+                print(self.c + "First TXT Scan Record: " + value1 + " | TTL: " + ttl1)
                 value2 = json_obj[1]['value']
                 ttl2 = json_obj[1]['ttl']
                 print("Second TXT Scan Record: " + value2 + " | TTL: " + ttl2)
-                print('DNS Lookup scan Completed.')
+                print('\nDNS Lookup scan Completed.\n' + self.c)
             else:
-                print('Bad Response')
-                print('Status Code of the Scan: {}'.format(response.status_code))
+                print(self.c + 'Bad Response')
+                print('Status Code of the Scan: {}'.format(response.status_code) + self.c)
         
         except IndexError:
-            print('Failed to scan some records...!')
-            print('DNS Lookup scan Completed.')
+            print(self.r + 'Failed to scan some records...!' + self.r)
+            print(self.c + '\nDNS Lookup scan Completed.\n' + self.c)
         
         except KeyError:
-            print('Failed to scan some records...!')
-            print('DNS Lookup scan Completed.')
+            print(self.r + 'Failed to scan some records...!' + self.r)
+            print(self.c + '\nDNS Lookup scan Completed.\n' + self.c)
 
     def printLogo(self):
 
