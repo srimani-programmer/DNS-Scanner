@@ -32,6 +32,10 @@ A TXT record (short for text record) is a type of resource record in the Domain 
 
 ##### This tool can able to scan all the records which are discussed above.
 
+#### Tool UI:
+
+![image.png]
+
 ### Dependencies:
 
 1. python v3.x
