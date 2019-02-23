@@ -1,4 +1,6 @@
-# Dns lookup Tool.
+# DNS Scanner: A python Dns lookup Tool.
+# Done by @Sri_Programmer
+# python v3.x
 
 # Modules import
 
@@ -6,6 +8,7 @@ import requests
 import json
 
 __author__ = 'Sri Manikanta Palakollu.'
+
 class Scanner:
 
     def __init__(self):
@@ -110,24 +113,47 @@ class Scanner:
                 print('AAAA Scan Record: TTL : {} | ipv6 Address: {}'.format(ttl,ipv6))
                 print('AAAA Scan completed Sucessfully')
                 print('Starting the TXT Record Scan')
-                # self.scanningTXTRecord()
+                self.scanningTXTRecord()
             else:
                 print('Bad Response')
                 print('Status Code of the Scan: {}'.format(response.status_code))
                 print('Starting the TXT Record Scan')
-                # self.scanningTXTRecord()
+                self.scanningTXTRecord()
         
         except IndexError:
             print('Failed to find Some AAAA Scanning records.')
             print('Starting the TXT Record scan.')
-            # self.scanningTXTRecord()
+            self.scanningTXTRecord()
         
         except KeyError:
             print('Failed to find some AAAA Scanning records.')
             print('Starting the TXT Record scan.')
-            # self.scanningTXTRecord()
+            self.scanningTXTRecord()
+
+    def scanningTXTRecord(self):
+        response = requests.get(self.api + 'TXT/' + self.domainName)
+
+        try:
+            if response.status_code == 200:
+                response_data = response.text
+                json_obj = json.loads(response_data)
+                value1 = json_obj[0]['value']
+                ttl1 = json_obj[0]['ttl']
+                print("First TXT Scan Record: " + value1 + " | TTL: " + ttl1)
+                value2 = json_obj[1]['value']
+                ttl2 = json_obj[1]['ttl']
+                print("Second TXT Scan Record: " + value2 + " | TTL: " + ttl2)
+                print('DNS Lookup scan Completed.')
+            else:
+                print('Bad Response')
+                print('Status Code of the Scan: {}'.format(response.status_code))
         
+        except IndexError:
+            print('Failed to scan some records...!')
+            print('DNS Lookup scan Completed.')
+        
+        except KeyError:
+            print('Failed to scan some records...!')
+            print('DNS Lookup scan Completed.')
 
 Scanner()
-
-        
