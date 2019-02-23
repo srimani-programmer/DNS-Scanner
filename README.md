@@ -34,7 +34,7 @@ A TXT record (short for text record) is a type of resource record in the Domain 
 
 #### Tool UI:
 
-!['image.png']
+![](image.png)
 
 ### Dependencies:
 
