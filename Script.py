@@ -25,24 +25,12 @@ class Scanner:
             if response.status_code == 200: # Getting the +ve response. 
                 responseDate = response.text
                 json_object = json.loads(responseDate)
-                '''
-                domain_name = json_object[0]['name']
-                ttl_value = json_object[0]['ttl']
-                typeOfScan = json_object[0]['type']
-                ipAddress = json_object[0]['value']
-                '''
                 ttl1 = json_object[0]['ttl']
                 ip1  =  json_object[0]['value']
                 print("First A Record: " + ip1 + " | TTL: " + ttl1)
                 ttl2 = json_object[1]['ttl']
                 ip2 = json_object[1]['value']
                 print("Second A Record: " + ip2 + " | TTL " + ttl2)
-                '''
-                print('Domain Name: {}'.format(domain_name))    # Domain Name
-                print('Ttl Value is: {}'.format(ttl_value))     # TTL value.
-                print('Type of Scan: {}'.format(typeOfScan))    # Type of Scan
-                print('Ip Address Of Domain: {}'.format(ipAddress)) # IpAddress
-                '''
                 print('Dns Lookup Scanning completed Sucessfully...!')
                 print('Starting the MX-Records Scan')
                 self.scanningMXRecords()
@@ -85,8 +73,7 @@ class Scanner:
             else:
                 print('Bad Response')
                 print('Status Code of the Scan: {}'.format(response.status_code))
-                self.scanningAAAARecords()
-   
+                self.scanningAAAARecords() 
         
         except IndexError:
             print('Failed to find Mx Scanning records.')
