@@ -6,15 +6,35 @@
 
 import requests
 import json
+import sys
+import random
+import time
 
 __author__ = 'Sri Manikanta Palakollu.'
 
 class Scanner:
 
     def __init__(self):
+
+        # Colors for the program
+
+        self.r = '\033[31m'
+        self.g = '\033[32m'
+        self.y = '\033[33m'
+        self.b = '\033[34m'
+        self.m = '\033[35m'
+        self.c = '\033[36m'
+        self.w = '\033[37m'
+        self.rr = '\033[39m'
+    
         self.api = "https://dns-api.org/"
-        self.domainName = input('Enter your domain name:')
-        self.scanningARecords()
+        try:
+            self.printLogo()
+            self.domainName = input(self.g + 'Enter your domain name:' + self.g)
+            self.scanningARecords()
+        except KeyboardInterrupt:
+            print(self.r + '\n [!] An Keyboard Interrupt Occured. [!]' + self.r)
+            quit()
 
     def scanningARecords(self):
         '''A Records are the most basic type of DNS record and 
@@ -118,6 +138,13 @@ class Scanner:
             self.scanningTXTRecord()
 
     def scanningTXTRecord(self):
+
+        '''
+         A TXT record (short for text record) is a type of resource record in the 
+         Domain Name System (DNS) used to provide the ability to associate arbitrary text with a host or other name,
+         such as human readable information about a server, network, data center, or other accounting information.
+        '''
+
         response = requests.get(self.api + 'TXT/' + self.domainName)
 
         try:
@@ -142,5 +169,31 @@ class Scanner:
         except KeyError:
             print('Failed to scan some records...!')
             print('DNS Lookup scan Completed.')
+
+    def printLogo(self):
+
+        colors = [36, 32, 34, 35, 31, 37]
+        clear = "\x1b[0m"
+
+        logo =  '''
+
+
+
+ ____  _   _ ____ ____   ____    _    _   _ _   _ _____ ____  
+|  _ \| \ | / ___/ ___| / ___|  / \  | \ | | \ | | ____|  _ \ 
+| | | |  \| \___ \___ \| |     / _ \ |  \| |  \| |  _| | |_) |
+| |_| | |\  |___) |__) | |___ / ___ \| |\  | |\  | |___|  _ < 
+|____/|_| \_|____/____/ \____/_/   \_\_| \_|_| \_|_____|_| \_\
+
+         
+         
+         
+         Done by Sri Manikanta Palakollu.  
+         Note! : I don't Accept any responsibility for any illegal usage 
+
+        '''
+        for N,line in enumerate(logo.split('\n')):
+            sys.stdout.write("\x1b[1;%dm%s%s\n" % (random.choice(colors), line, clear))
+            time.sleep(0.05)
 
 Scanner()
